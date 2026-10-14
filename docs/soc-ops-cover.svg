@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title description">
+  <title id="title">Soc Ops: Strangers. Stories. Bingo.</title>
+  <desc id="description">A warm paper poster with oversized serif lettering and a tilted social bingo card in ink, orange, and lime.</desc>
+  <defs>
+    <pattern id="paper" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r=".6" fill="#252b23" opacity=".12"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="560" fill="#f6f1e7"/>
+  <rect width="1200" height="560" fill="url(#paper)"/>
+  <g fill="#252b23">
+    <text x="60" y="62" font-family="Trebuchet MS, sans-serif" font-size="29" font-weight="bold">soc<tspan fill="#c44221">●</tspan>ops</text>
+    <text x="1140" y="57" text-anchor="end" font-family="Courier New, monospace" font-size="13" letter-spacing="2">THE CONVERSATION ARCADE / NO. 001</text>
+    <path d="M60 85H1140" stroke="#252b23"/>
+    <text x="60" y="209" font-family="Baskerville, Georgia, serif" font-size="105" letter-spacing="-5">Strangers.</text>
+    <text x="60" y="306" font-family="Baskerville, Georgia, serif" font-size="105" letter-spacing="-5">Stories.</text>
+    <text x="60" y="408" font-family="Baskerville, Georgia, serif" font-size="112" font-style="italic" fill="#c44221" letter-spacing="-5">Bingo.</text>
+    <text x="64" y="455" font-family="Trebuchet MS, sans-serif" font-size="19">Twenty-four little prompts. A room full of possibilities.</text>
+  </g>
+  <g transform="translate(702 128) rotate(-6 190 150)">
+    <rect x="10" y="10" width="370" height="300" fill="#252b23" opacity=".15"/>
+    <rect width="370" height="300" fill="#fffdf5" stroke="#252b23" stroke-width="2"/>
+    <text x="18" y="30" fill="#252b23" font-family="Courier New, monospace" font-size="13" font-weight="bold">YOUR NEXT HELLO</text>
+    <g stroke="#252b23" stroke-width="1">
+      <rect x="18" y="48" width="111" height="70" fill="#f6f1e7"/>
+      <rect x="129" y="48" width="111" height="70" fill="#d5ed8a"/>
+      <rect x="240" y="48" width="111" height="70" fill="#f6f1e7"/>
+      <rect x="18" y="118" width="111" height="70" fill="#f6f1e7"/>
+      <rect x="129" y="118" width="111" height="70" fill="#252b23"/>
+      <rect x="240" y="118" width="111" height="70" fill="#f6f1e7"/>
+      <rect x="18" y="188" width="111" height="70" fill="#d5ed8a"/>
+      <rect x="129" y="188" width="111" height="70" fill="#f6f1e7"/>
+      <rect x="240" y="188" width="111" height="70" fill="#f6f1e7"/>
+    </g>
+    <g fill="#252b23" font-family="Trebuchet MS, sans-serif" font-size="13" text-anchor="middle">
+      <text x="73" y="80">plays an<tspan x="73" dy="17">instrument</tspan></text>
+      <text x="184" y="80">loves<tspan x="184" dy="17">spicy food</tspan></text>
+      <text x="295" y="80">has a<tspan x="295" dy="17">hidden talent</tspan></text>
+      <text x="73" y="150">has lived<tspan x="73" dy="17">abroad</tspan></text>
+      <text x="184" y="151" fill="#d5ed8a" font-size="27">✳</text>
+      <text x="184" y="175" fill="#f6f1e7" font-family="Courier New, monospace" font-size="10">FREE SPACE</text>
+      <text x="295" y="150">can<tspan x="295" dy="17">juggle</tspan></text>
+      <text x="73" y="228">has a pet</text>
+      <text x="184" y="220">collects<tspan x="184" dy="17">something unique</tspan></text>
+      <text x="295" y="220">knows<tspan x="295" dy="17">sign language</tspan></text>
+    </g>
+    <text x="18" y="283" fill="#252b23" font-family="Courier New, monospace" font-size="10">MAKE A MATCH. MAKE A MEMORY.</text>
+  </g>
+  <g transform="translate(1060 420) rotate(12)">
+    <circle r="66" fill="#c44221" stroke="#252b23" stroke-width="2"/>
+    <text text-anchor="middle" fill="#f6f1e7" font-family="Courier New, monospace" font-size="13">
+      <tspan x="0" y="-5">LESS SCROLL.</tspan><tspan x="0" dy="23" font-weight="bold">MORE SOUL.</tspan>
+    </text>
+  </g>
+  <path d="M60 500H1140" stroke="#252b23"/>
+  <text x="60" y="533" fill="#5e655a" font-family="Courier New, monospace" font-size="12">BUILT FOR BEING IN THE SAME ROOM.</text>
+  <text x="1140" y="533" text-anchor="end" fill="#5e655a" font-family="Courier New, monospace" font-size="12">24 PROMPTS + YOU.</text>
+</svg>

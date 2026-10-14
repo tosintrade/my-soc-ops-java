@@ -1,94 +1,109 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Soc Ops — Social Bingo</title>
     <link rel="stylesheet" th:href="@{/css/app.css}"/>
     <link rel="icon" type="image/png" th:href="@{/favicon.png}"/>
-    <style>
-        /* active-state tweaks that need pseudo-class selectors */
-        .tile-active:active { background-color: #f3f4f6 !important; }
-        .accent-active:active { background-color: #3b82f6 !important; }
-    </style>
 </head>
-<body class="h-full">
+<body>
 
 <!-- ============================================================= -->
 <!--  LOBBY — visible before a game starts                          -->
 <!-- ============================================================= -->
-<div id="lobbyView" class="flex flex-col items-center justify-center min-h-full p-6 bg-gray-50">
-    <div class="text-center max-w-sm">
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">Soc Ops</h1>
-        <p class="text-lg text-gray-600 mb-8">Social Bingo</p>
-
-        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200 mb-8">
-            <h2 class="font-semibold text-gray-800 mb-3">How to play</h2>
-            <ul class="text-left text-gray-600 text-sm space-y-2">
-                <li>• Find people who match the questions</li>
-                <li>• Tap a square when you find a match</li>
-                <li>• Get 5 in a row to win!</li>
-            </ul>
-        </div>
-
-        <button onclick="launchGame()"
-                class="w-full bg-accent text-white font-semibold py-4 px-8 rounded-lg text-lg accent-active transition-colors">
-            Start Game
-        </button>
+<main id="lobbyView" class="lobby-shell">
+    <header class="masthead">
+        <a class="wordmark" href="/" aria-label="Soc Ops home">soc<span class="brand-dot">●</span>ops</a>
+        <span class="eyebrow">An offline kind of connection.</span>
+    </header>
+    <div class="hero-layout">
+        <section class="hero-copy">
+            <p class="eyebrow edition-label">The conversation arcade / No. 001</p>
+            <h1>Strangers.<br/>Stories.<br/><em>Bingo.</em></h1>
+            <p class="hero-description">Skip the small talk. Find your people.<br/>Twenty-four little prompts. A room full of possibilities.</p>
+            <button id="startButton" onclick="launchGame()" class="action-button">
+                Start Game <span aria-hidden="true">↗</span>
+            </button>
+            <p class="micro-copy">No sign-ups. Just show up.</p>
+            <p id="gameError" class="error-message" role="alert" hidden></p>
+        </section>
+        <aside class="preview-scene" aria-label="A taste of the conversation starters on your board">
+            <span class="orbit-note" aria-hidden="true">GOOD PEOPLE.<br/>GREAT STORIES.</span>
+            <div class="preview-card">
+                <div class="card-heading"><span>YOUR NEXT HELLO</span><span aria-hidden="true">↗</span></div>
+                <div class="preview-grid">
+                    <span>plays an<br/>instrument</span><span class="preview-marked">loves<br/>spicy food <b aria-hidden="true">✓</b></span><span>has a<br/>hidden talent</span>
+                    <span>has lived<br/>abroad</span><span class="preview-free"><b aria-hidden="true">✳</b> FREE SPACE</span><span>can<br/>juggle</span>
+                    <span class="preview-marked">has a pet <b aria-hidden="true">✓</b></span><span>collects<br/>something unique</span><span>knows<br/>sign language</span>
+                </div>
+                <div class="card-footer"><span>MAKE A MATCH. MAKE A MEMORY.</span><span>03 / 25</span></div>
+            </div>
+            <span class="round-sticker" aria-hidden="true">LESS SCROLL.<br/><b>MORE SOUL.</b></span>
+        </aside>
     </div>
-</div>
+    <section class="how-strip" aria-labelledby="howTitle">
+        <h2 id="howTitle">A little game.<br/>A better hello.</h2>
+        <ol class="how-steps">
+            <li><span class="step-number">01</span><div><h3>Work the room.</h3><p>Find someone who matches a prompt.</p></div></li>
+            <li><span class="step-number">02</span><div><h3>Make your mark.</h3><p>Tap their square. Ask for the story.</p></div></li>
+            <li><span class="step-number">03</span><div><h3>Connect five.</h3><p>A row, column, or diagonal wins.</p></div></li>
+        </ol>
+    </section>
+    <footer class="site-footer"><span>Built for being in the same room.</span><span>24 prompts + you.</span></footer>
+</main>
 
 <!-- ============================================================= -->
 <!--  ACTIVE GAME — board, header, optional bingo banner            -->
 <!-- ============================================================= -->
-<div id="activeView" class="flex flex-col min-h-full bg-gray-50" style="display:none">
+<main id="activeView" class="game-shell" style="display:none">
 
     <!-- top bar -->
-    <header class="flex items-center justify-between p-3 bg-white border-b border-gray-200">
-        <button onclick="retreatToLobby()"
-                class="text-gray-500 text-sm px-3 py-1\.5 rounded tile-active">
-            &#8592; Back
-        </button>
-        <h1 class="font-bold text-gray-900">Soc Ops</h1>
-        <div class="w-16"></div>
+    <header class="game-header">
+        <button id="backButton" onclick="retreatToLobby()" class="text-button">← Back</button>
+        <span class="wordmark">soc<span class="brand-dot">●</span>ops</span>
+        <span class="eyebrow">Social bingo</span>
     </header>
-
-    <!-- hint -->
-    <p class="text-center text-gray-500 text-sm py-2 px-4">
-        Tap a square when you find someone who matches it.
-    </p>
+    <section class="board-intro">
+        <p class="eyebrow">Your conversation card</p>
+        <h1>Every square has a story.</h1>
+        <p id="boardHint">Find a match. Tap a square. Get five in a row.</p>
+    </section>
 
     <!-- bingo banner (hidden until victory) -->
     <div id="bingoBanner"
-         class="bg-amber-100 text-amber-800 text-center py-2 font-semibold text-sm"
+         class="bingo-banner" role="status"
          style="display:none">
-        &#127881; BINGO! You got a line!
+        ✳ BINGO! A line of squares. A handful of new stories.
     </div>
 
     <!-- the 5×5 grid -->
-    <div class="flex-1 flex items-center justify-center p-3">
-        <div id="gridContainer"
-             class="grid grid-cols-5 gap-1 w-full max-w-md mx-auto aspect-square">
+    <section class="board-card" aria-label="Your bingo board" aria-describedby="boardHint">
+        <div class="bingo-letters" aria-hidden="true"><span>B</span><span>I</span><span>N</span><span>G</span><span>O</span></div>
+        <div id="gridContainer" class="bingo-grid">
             <!-- tiles injected by JS -->
-        </div>
-    </div>
+            <div class="board-footer"><span id="progressCount" role="status" aria-live="polite">0 / 24 connections</span><span>Centre space is on us.</span></div>
+        </section>
+        <p class="game-footnote">The best part isn't winning. It's who you meet along the way.</p>
+    </main>
 </div>
 
 <!-- ============================================================= -->
 <!--  VICTORY MODAL — overlays the board                            -->
 <!-- ============================================================= -->
 <div id="victoryOverlay"
-     class="fixed inset-0 bg-black\/50 flex items-center justify-center p-4 z-50"
+     class="victory-overlay" role="dialog" aria-modal="true" aria-labelledby="victoryTitle" aria-describedby="victoryDescription"
      style="display:none">
-    <div class="bg-white rounded-xl p-6 max-w-xs w-full text-center shadow-xl animate-[bounce_0.5s_ease-out]">
-        <div class="text-5xl mb-4">&#127881;</div>
-        <h2 class="text-3xl font-bold text-amber-500 mb-2">BINGO!</h2>
-        <p class="text-gray-600 mb-6">You completed a line!</p>
-        <button onclick="dismissVictoryModal()"
-                class="w-full bg-accent text-white font-semibold py-3 px-6 rounded-lg accent-active transition-colors">
-            Keep Playing
+    <div class="victory-card">
+        <div class="victory-symbol" aria-hidden="true">✳</div>
+        <p class="eyebrow">Connection complete</p>
+        <h2 id="victoryTitle">Oh, hello<br/><em>BINGO!</em></h2>
+        <p id="victoryDescription">Five in a row. New stories in your pocket.<br/>Why stop at one line?</p>
+        <button id="keepPlayingButton" onclick="dismissVictoryModal()" class="action-button">
+            Keep Playing <span aria-hidden="true">↗</span>
         </button>
     </div>
+    <noscript><p class="error-message">Enable JavaScript to generate your bingo board and mark matches.</p></noscript>
 </div>
 
 <!-- ============================================================= -->
@@ -114,6 +129,17 @@
     var gridDiv    = document.getElementById("gridContainer");
     var bannerDiv  = document.getElementById("bingoBanner");
     var overlayDiv = document.getElementById("victoryOverlay");
+    var startButton = document.getElementById("startButton");
+    var errorDiv = document.getElementById("gameError");
+    var lastTappedId = null;
+
+    function syncVictoryModal() {
+        overlayDiv.style.display = modalShown ? "" : "none";
+        activeDiv.inert = modalShown;
+        if (modalShown) {
+            document.getElementById("keepPlayingButton").focus();
+        }
+    }
 
     /* ── phase switching ──────────────────────────────────────── */
     function showPhase(phase) {
@@ -121,7 +147,7 @@
         lobbyDiv.style.display   = (phase === "LOBBY") ? "" : "none";
         activeDiv.style.display  = (phase !== "LOBBY") ? "" : "none";
         bannerDiv.style.display  = (streakFound)       ? "" : "none";
-        overlayDiv.style.display = (modalShown)        ? "" : "none";
+        syncVictoryModal();
     }
 
     /* ── board rendering ──────────────────────────────────────── */
@@ -133,22 +159,10 @@
             var tile = liveTiles[t];
             var btn = document.createElement("button");
 
-            /* base styling identical to the original Blazor BingoSquare */
-            var base = "relative flex items-center justify-center p-1 text-center " +
-                       "border border-gray-300 rounded transition-all duration-150 " +
-                       "select-none min-h-[60px] text-xs leading-tight";
-
-            var state;
-            if (tile.selected) {
-                state = winIds[tile.id]
-                    ? "bg-amber-200 border-amber-400 text-amber-900"
-                    : "bg-marked border-marked-border text-green-800";
-            } else {
-                state = "bg-white text-gray-700 tile-active";
-            }
-
-            var extra = tile.freeCell ? " font-bold text-sm" : "";
-            btn.className = base + " " + state + extra;
+            btn.className = "bingo-tile" + (tile.selected ? " is-marked" : "") +
+                (tile.selected && winIds[tile.id] ? " is-winning" : "") +
+                (tile.freeCell ? " is-free" : "");
+            btn.dataset.cellId = tile.id;
 
             if (tile.freeCell) { btn.disabled = true; }
             btn.setAttribute("aria-pressed", String(tile.selected));
@@ -156,15 +170,16 @@
 
             /* inner label */
             var labelSpan = document.createElement("span");
-            labelSpan.className = "wrap-break-word hyphens-auto";
+            labelSpan.className = "tile-label";
             labelSpan.textContent = tile.prompt;
             btn.appendChild(labelSpan);
 
             /* check-mark for marked non-free tiles */
             if (tile.selected && !tile.freeCell) {
                 var tick = document.createElement("span");
-                tick.className = "absolute top-0.5 right-0.5 text-green-600 text-xs";
+                tick.className = "tile-tick";
                 tick.textContent = "\u2713";
+                tick.setAttribute("aria-hidden", "true");
                 btn.appendChild(tick);
             }
 
@@ -175,10 +190,19 @@
 
             gridDiv.appendChild(btn);
         }
+        document.getElementById("progressCount").textContent =
+            liveTiles.filter(function (tile) { return tile.selected && !tile.freeCell; }).length +
+            " / 24 connections";
+    }
+
+    function focusLastTile() {
+        var tile = gridDiv.querySelector('[data-cell-id="' + lastTappedId + '"]');
+        if (tile) { tile.focus(); }
     }
 
     /* ── tile tap logic ───────────────────────────────────────── */
     function onTileTapped(cellId) {
+        lastTappedId = cellId;
         liveTiles = flipTile(liveTiles, cellId);
 
         if (!streakFound) {
@@ -192,7 +216,8 @@
         persistSnapshot();
         paintGrid();
         bannerDiv.style.display  = streakFound ? "" : "none";
-        overlayDiv.style.display = modalShown  ? "" : "none";
+        syncVictoryModal();
+        if (!modalShown) { focusLastTile(); }
     }
 
     /* ── board manipulation (mirrors BoardAssembler.java) ─────── */
@@ -288,8 +313,14 @@
 
     /* ── public API (called from onclick attrs) ───────────────── */
     window.launchGame = function () {
+        startButton.disabled = true;
+        startButton.textContent = "Shuffling your card...";
+        errorDiv.hidden = true;
         fetch("/api/bingo/fresh-board")
-            .then(function (resp) { return resp.json(); })
+            .then(function (resp) {
+                if (!resp.ok) { throw new Error("Board request failed: " + resp.status); }
+                return resp.json();
+            })
             .then(function (cells) {
                 liveTiles   = cells;
                 streakFound = null;
@@ -298,6 +329,16 @@
                 persistSnapshot();
                 paintGrid();
                 showPhase("ACTIVE");
+                document.getElementById("backButton").focus();
+            })
+            .catch(function (error) {
+                console.error("Unable to start bingo game", error);
+                errorDiv.textContent = "Couldn't load your card. Check your connection and try again.";
+                errorDiv.hidden = false;
+            })
+            .finally(function () {
+                startButton.disabled = false;
+                startButton.innerHTML = 'Start Game <span aria-hidden="true">↗</span>';
             });
     };
 
@@ -308,13 +349,27 @@
         currentPhase = "LOBBY";
         persistSnapshot();
         showPhase("LOBBY");
+        startButton.focus();
     };
 
     window.dismissVictoryModal = function () {
         modalShown = false;
-        overlayDiv.style.display = "none";
+        syncVictoryModal();
+        if (lastTappedId === null) {
+            document.getElementById("backButton").focus();
+        } else {
+            focusLastTile();
+        }
         persistSnapshot();
     };
+
+    overlayDiv.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") { window.dismissVictoryModal(); }
+        if (event.key === "Tab") {
+            event.preventDefault();
+            document.getElementById("keepPlayingButton").focus();
+        }
+    });
 
     /* ── boot ─────────────────────────────────────────────────── */
     if (restoreSnapshot()) {

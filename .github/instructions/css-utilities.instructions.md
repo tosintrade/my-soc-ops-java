@@ -5,7 +5,13 @@ description: CSS utility classes and styling practices for this Spring Boot proj
 # CSS Styling Practices
 
 ## Overview
-This project uses custom CSS utility classes (similar to Tailwind) defined in `src/main/resources/static/css/app.css`. These provide consistent, composable styling without external dependencies.
+This project uses custom CSS utility classes (similar to Tailwind) defined in `socops/src/main/resources/static/css/app.css`. These provide consistent, composable styling without external dependencies.
+
+The redesigned game uses low-specificity component classes and the conversation
+arcade theme tokens in that same stylesheet. Follow the
+[design guide](../copilot-instructions.md#design-guide) for new game UI.
+Legacy blue/gray utilities remain available, but should not override the warm
+paper, ink, orange, and lime theme on redesigned components.
 
 ## Available Utilities
 
